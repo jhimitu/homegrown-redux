@@ -1,5 +1,6 @@
 function createStore(reducer, initialState) {
     let state = initialState; // contains stateful information for your application
+    const subscribers = [];
     function getState() {
         return state;
     }
@@ -7,9 +8,14 @@ function createStore(reducer, initialState) {
     function dispatch(action) {
         // set state based on the action - the action is an object with an  action type and a payload
         state = reducer(state, action);
+        subscribers.forEach(subscriber => subscriber());
     }
 
-    return { getState, dispatch };
+    function subscribe(listener) {
+        subscribers.push(listener);
+    }
+
+    return { getState, dispatch, subscribe };
 };
 
 function reducer(state, action) {
