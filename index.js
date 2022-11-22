@@ -1,22 +1,4 @@
-function createStore(reducer, initialState) {
-    let state = initialState; // contains stateful information for your application
-    const subscribers = [];
-    function getState() {
-        return state;
-    }
-
-    function dispatch(action) {
-        // set state based on the action - the action is an object with an  action type and a payload
-        state = reducer(state, action);
-        subscribers.forEach(subscriber => subscriber());
-    }
-
-    function subscribe(listener) {
-        subscribers.push(listener);
-    }
-
-    return { getState, dispatch, subscribe };
-};
+import createStore from "./createStore";
 
 function reducer(state, action) {
     switch (action.type) {
